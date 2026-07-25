@@ -4,7 +4,7 @@ import requests
 import os
 import gdown
 
-API_KEY = "76347eb36d1bc6d75985fc7abfa26d4c"
+API_KEY = st.secrets["TMDB_API_KEY"]
 
 # Load data
 # Load movies
