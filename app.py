@@ -1,12 +1,26 @@
 import streamlit as st
 import pickle
 import requests
+import os
+import gdown
 
 API_KEY = "76347eb36d1bc6d75985fc7abfa26d4c"
 
 # Load data
-movies = pickle.load(open('movies.pkl', 'rb'))
-similarity = pickle.load(open('similarity.pkl', 'rb'))
+# Load movies
+movies = pickle.load(open("movies.pkl", "rb"))
+
+# Download similarity.pkl if it doesn't exist
+if not os.path.exists("similarity.pkl"):
+    st.info("Downloading recommendation model... Please wait.")
+
+    file_id = "13NH_5FFuJQCPFr0KpbWB1dnnP5IptioZ"
+    url = f"https://drive.google.com/uc?id={file_id}"
+
+    gdown.download(url, "similarity.pkl", quiet=False)
+
+# Load similarity matrix
+similarity = pickle.load(open("similarity.pkl", "rb"))
 
 def fetch_poster(movie_id):
     url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}&language=en-US"
